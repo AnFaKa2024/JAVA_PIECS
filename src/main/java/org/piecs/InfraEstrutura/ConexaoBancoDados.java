@@ -1,5 +1,7 @@
 package org.piecs.InfraEstrutura;
 
+import org.apache.logging.log4j.LogManager;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,7 +13,7 @@ public class ConexaoBancoDados {
     private static final String USUARIO = "rm558274";
     private static final String SENHA = "150805";
 
-    private static final Logger logger = LogManager.getLogger(ConexaoBancoDados.class);
+    private static final Logger logger = (Logger) LogManager.getLogger(ConexaoBancoDados.class);
 
     public static Connection getConnection() {
         Connection conexao = null;
@@ -20,9 +22,9 @@ public class ConexaoBancoDados {
             conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
             logger.info("Conexão estabelecida com sucesso!");
         } catch (ClassNotFoundException e) {
-            logger.error("Driver JDBC não encontrado: " + e.getMessage());
+            logger.log("Driver JDBC não encontrado: " + e.getMessage());
         } catch (SQLException e) {
-            logger.error("Erro ao conectar com o banco de dados: " + e.getMessage());
+            logger.log("Erro ao conectar com o banco de dados: " + e.getMessage());
         }
         return conexao;
     }
