@@ -9,101 +9,83 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
 
     @Override
     public void Adicionar(T_PIECS_RESPONSAVEL responsavel) {
-
-        try{
-            var conn = ConexaoBancoDados.getConnection();
-            var query = "INSERT INTO T_PIECS_RESPONSAVEL (nm_cliente, dt_nascimento, cpf_cnpj, email, senha, qt_armazenada_total) VALUES (?,?,?,?,?,?)";
-            var stmt = conn.prepareStatement(query);
+        String query = "INSERT INTO T_PIECS_RESPONSAVEL (nm_cliente, dt_nascimento, cpf_cnpj, email, senha, qt_armazenada_total, beneficiarios, enderecos) VALUES (?,?,?,?,?,?,?,?)";
+        try (var conn = ConexaoBancoDados.getConnection();
+             var stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, responsavel.getNm_cliente());
-            stmt.setInt(2, responsavel.getDt_nascimento());
+            stmt.setDate(2, java.sql.Date.valueOf(responsavel.getDt_nascimento()));
             stmt.setString(3, responsavel.getCpf_cnpj());
             stmt.setString(4, responsavel.getEmail());
             stmt.setString(5, responsavel.getSenha());
             stmt.setInt(6, responsavel.getQt_armazenada_total());
+            stmt.setObject(7, responsavel.getBeneficiarios());
+            stmt.setObject(8, responsavel.getEnderecos());
 
             stmt.executeUpdate();
-            stmt.close();
-            conn.close();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void Listar() {
-        try{
-            var conn = ConexaoBancoDados.getConnection();
-            var query = "SELECT * FROM T_PIECS_RESPONSAVEL";
-            var stmt = conn.prepareStatement(query);
-            var rs = stmt.executeQuery();
+        String query = "SELECT * FROM T_PIECS_RESPONSAVEL";
+        try (var conn = ConexaoBancoDados.getConnection();
+             var stmt = conn.prepareStatement(query);
+             var rs = stmt.executeQuery()) {
 
-            while (rs.next()){
+            while (rs.next()) {
                 var rsId = rs.getInt("id");
                 var nm_cliente = rs.getString("nm_cliente");
-                var dt_nascimento = rs.getInt("dt_nascimento");
+                var dt_nascimento = rs.getDate("dt_nascimento");
                 var cpf_cnpj = rs.getString("cpf_cnpj");
                 var email = rs.getString("email");
                 var senha = rs.getString("senha");
-                var qt_armazenada_total = rs.getString("qt_armazenada_total");
+                var qt_armazenada_total = rs.getInt("qt_armazenada_total");
                 System.out.println("id" + rsId + "| nm_cliente" + nm_cliente + "| cpf_cnpj" + cpf_cnpj);
             }
-            rs.close();
-            conn.close();
-            stmt.close();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void Delete(int id) {
-        try{
-            var conn = ConexaoBancoDados.getConnection();
-            var query = "DELETE FROM T_PIECS_RESPONSAVEL WHERE id = ?";
-            var stmt = conn.prepareStatement(query);
-            stmt.setInt(1, id);
+    public void Delete(String id) {
+        String query = "DELETE FROM T_PIECS_RESPONSAVEL WHERE id = ?";
+        try (var conn = ConexaoBancoDados.getConnection();
+             var stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, id);
             stmt.executeUpdate();
-            stmt.close();
-            conn.close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-//    @Override
-//    public void UpDate() {
-//
-//    }
-
     @Override
-    public T_PIECS_RESPONSAVEL GetById(int id) {
-
+    public T_PIECS_RESPONSAVEL GetById(String id) {
         T_PIECS_RESPONSAVEL responsavel = null;
+        String query = "SELECT * FROM T_PIECS_RESPONSAVEL WHERE id = ?";
+        try (var conn = ConexaoBancoDados.getConnection();
+             var stmt = conn.prepareStatement(query)) {
 
-        try{
-            var conn = ConexaoBancoDados.getConnection();
-            var query = "SELECT * FROM T_PIECS_RESPONSAVEL WHERE id = ?";
-            var stmt = conn.prepareStatement(query);
-
-            stmt.setInt(1, id);
-
-            var rs = stmt.executeQuery();
-            if (rs.next()){
-                var rsId = rs.getInt("id");
-                var rsCliente = rs.getString("nm_cliente");
-                responsavel = new T_PIECS_RESPONSAVEL(rsId, rsCliente);
+            stmt.setString(1, id);
+            try (var rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    var rsId = rs.getString("id");
+                    var rsCliente = rs.getString("nm_cliente");
+                    var rsDtNascimento = rs.getDate("dt_nascimento");
+                    var rsBeneficiarios = rs.getObject("beneficiarios");
+                    var rsEnderecos = rs.getObject("enderecos");
+                    responsavel = new T_PIECS_RESPONSAVEL(rsId, rsCliente, rsDtNascimento, rsBeneficiarios, rsEnderecos);
+                }
             }
-            stmt.close();
-            conn.close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return responsavel;
     }
+
+
 }

@@ -12,8 +12,8 @@ public class T_PIECS_ENDERECO extends EntidadeBase{
     public T_PIECS_ENDERECO() {
     }
 
-    public T_PIECS_ENDERECO(int id, boolean deletado) {
-        super(id, deletado);
+    public T_PIECS_ENDERECO(String id) {
+        super(id);
     }
 
     public T_PIECS_ENDERECO(String cep, String rua, String bairro, String cidade, String estado, int numero) {
@@ -25,8 +25,8 @@ public class T_PIECS_ENDERECO extends EntidadeBase{
         this.numero = numero;
     }
 
-    public T_PIECS_ENDERECO(int id, boolean deletado, String cep, String rua, String bairro, String cidade, String estado, int numero) {
-        super(id, deletado);
+    public T_PIECS_ENDERECO(String id, String cep, String rua, String bairro, String cidade, String estado, int numero) {
+        super(id);
         this.cep = cep;
         this.rua = rua;
         this.bairro = bairro;
@@ -83,17 +83,20 @@ public class T_PIECS_ENDERECO extends EntidadeBase{
         this.numero = numero;
     }
 
+    public String getId(){
+        return this.id;
+    }
+
     @Override
     public String toString() {
-        return "Endereco{" +
+        return "T_PIECS_ENDERECO{" +
                 "cep='" + cep + '\'' +
                 ", rua='" + rua + '\'' +
                 ", bairro='" + bairro + '\'' +
                 ", cidade='" + cidade + '\'' +
                 ", estado='" + estado + '\'' +
                 ", numero=" + numero +
-                ", id=" + id +
-                ", deletado=" + deletado +
+                ", id='" + id + '\'' +
                 '}';
     }
 }

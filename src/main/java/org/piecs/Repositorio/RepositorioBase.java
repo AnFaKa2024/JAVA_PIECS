@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RepositorioBase <T extends EntidadeBase>{
     void Adicionar(T entidade);
-    List<T_PIECS_ENDERECO> Listar ();
+    void Listar();
     void Delete(String id);
     void UpDate();
     default T GetById(String id){return null;}

@@ -1,12 +1,14 @@
 package org.piecs.Modelo;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 public class T_PIECS_RESPONSAVEL extends EntidadeBase {
 
     private String nm_cliente;
-    private int dt_nascimento;
+    private Date dt_nascimento;
     private String cpf_cnpj;
     private String email;
     private String senha;
@@ -14,35 +16,11 @@ public class T_PIECS_RESPONSAVEL extends EntidadeBase {
     private List<T_PIECS_BENEFICIARIOS> beneficiarios;
     private List<T_PIECS_ENDERECO> enderecos;
 
-
     public T_PIECS_RESPONSAVEL() {
     }
 
-    public T_PIECS_RESPONSAVEL(int id, boolean deletado) {
-        super(id, deletado);
-    }
-
-    public T_PIECS_RESPONSAVEL(String nm_cliente, int dt_nascimento, String cpf_cnpj, String email, String senha, int qt_armazenada_total, List<T_PIECS_BENEFICIARIOS> beneficiarios, List<T_PIECS_ENDERECO> enderecos) {
-        this.nm_cliente = nm_cliente;
-        this.dt_nascimento = dt_nascimento;
-        this.cpf_cnpj = cpf_cnpj;
-        this.email = email;
-        this.senha = senha;
-        this.qt_armazenada_total = qt_armazenada_total;
-        this.beneficiarios = beneficiarios;
-        this.enderecos = enderecos;
-    }
-
-    public T_PIECS_RESPONSAVEL(int id, boolean deletado, String nm_cliente, int dt_nascimento, String cpf_cnpj, String email, String senha, int qt_armazenada_total, List<T_PIECS_BENEFICIARIOS> beneficiarios, List<T_PIECS_ENDERECO> enderecos) {
-        super(id, deletado);
-        this.nm_cliente = nm_cliente;
-        this.dt_nascimento = dt_nascimento;
-        this.cpf_cnpj = cpf_cnpj;
-        this.email = email;
-        this.senha = senha;
-        this.qt_armazenada_total = qt_armazenada_total;
-        this.beneficiarios = beneficiarios;
-        this.enderecos = enderecos;
+    public T_PIECS_RESPONSAVEL(String id) {
+        super(id);
     }
 
     public String getNm_cliente() {
@@ -53,11 +31,11 @@ public class T_PIECS_RESPONSAVEL extends EntidadeBase {
         this.nm_cliente = nm_cliente;
     }
 
-    public int getDt_nascimento() {
-        return dt_nascimento;
+    public LocalDate getDt_nascimento() {
+        return dt_nascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
-    public void setDt_nascimento(int dt_nascimento) {
+    public void setDt_nascimento(Date dt_nascimento) {
         this.dt_nascimento = dt_nascimento;
     }
 
@@ -109,6 +87,10 @@ public class T_PIECS_RESPONSAVEL extends EntidadeBase {
         this.enderecos = enderecos;
     }
 
+    public String getId(){
+        return this.id;
+    }
+
     @Override
     public String toString() {
         return "T_PIECS_RESPONSAVEL{" +
@@ -120,8 +102,7 @@ public class T_PIECS_RESPONSAVEL extends EntidadeBase {
                 ", qt_armazenada_total=" + qt_armazenada_total +
                 ", beneficiarios=" + beneficiarios +
                 ", enderecos=" + enderecos +
-                ", id=" + id +
-                ", deletado=" + deletado +
+                ", id='" + id + '\'' +
                 '}';
     }
 }

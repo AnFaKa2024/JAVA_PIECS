@@ -9,8 +9,9 @@ public class T_PIECS_BENEFICIARIOS extends EntidadeBase{
     public T_PIECS_BENEFICIARIOS() {
     }
 
-    public T_PIECS_BENEFICIARIOS(int id, boolean deletado) {
-        super(id, deletado);
+    public T_PIECS_BENEFICIARIOS(String id) {
+        super(id);
+
     }
 
     public T_PIECS_BENEFICIARIOS(String nm_beneficiario, String email, String senha, T_PIECS_RESPONSAVEL responsavel) {
@@ -20,8 +21,8 @@ public class T_PIECS_BENEFICIARIOS extends EntidadeBase{
         this.responsavel = responsavel;
     }
 
-    public T_PIECS_BENEFICIARIOS(int id, boolean deletado, String nm_beneficiario, String email, String senha, T_PIECS_RESPONSAVEL responsavel) {
-        super(id, deletado);
+    public T_PIECS_BENEFICIARIOS(String id, String nm_beneficiario, String email, String senha, T_PIECS_RESPONSAVEL responsavel) {
+        super(id);
         this.nm_beneficiario = nm_beneficiario;
         this.email = email;
         this.senha = senha;
@@ -60,6 +61,10 @@ public class T_PIECS_BENEFICIARIOS extends EntidadeBase{
         this.responsavel = responsavel;
     }
 
+    public String getId(){
+        return this.id;
+    }
+
     @Override
     public String toString() {
         return "T_PIECS_BENEFICIARIOS{" +
@@ -67,8 +72,9 @@ public class T_PIECS_BENEFICIARIOS extends EntidadeBase{
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
                 ", responsavel=" + responsavel +
-                ", id=" + id +
-                ", deletado=" + deletado +
+                ", id='" + id + '\'' +
                 '}';
     }
+
+
 }

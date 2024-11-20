@@ -6,39 +6,63 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.piecs.Modelo.T_PIECS_MICRO_REGIAO;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Path("T_PIECS_MICRO_REGIAO")
 public class Micro_RegiaoResource {
 
+    private List<T_PIECS_MICRO_REGIAO> micro_regioes = new ArrayList<>();
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("page/{responsavel}")
+    @Path("page/{page}")
     public Response getMicro_Regiao(
-        @PathParam("pages") int pages,
+        @PathParam("page") int pages,
         @QueryParam("pageSize") int pageSize)
-    {}
+    {
+        List<T_PIECS_MICRO_REGIAO> microRegioes = micro_regioes.stream()
+            .skip((pages - 1) * pageSize)
+            .limit(pageSize)
+            .toList();
+        return Response.ok(microRegioes).build();
+    }
 
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("search")
     public List<T_PIECS_MICRO_REGIAO> searchMicro_Regiao(
-            @QueryParam("Qt_plcas") int qt_placas,
+            @QueryParam("Qt_placas") int qt_placas,
             @QueryParam("Qt_baterias") int qt_baterias)
-    {}
+    {
+        List<T_PIECS_MICRO_REGIAO> resultados = micro_regioes.stream()
+            .filter(micro_regiao -> micro_regiao.getQt_placa() == qt_placas && micro_regiao.getQt_bateria() == qt_baterias)
+            .toList();
+        return resultados;
+    }
 
     @POST
-    @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addMicro_Regiao(Micro_Regiao novaMicro_Regiao){}
+    public Response addMicro_Regiao(Micro_Regiao novaMicro_Regiao){
+        if (novaMicro_Regiao == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Micro Região não pode ser nula").build();
+        }
+        micro_regioes.add(novaMicro_Regiao);
+        return Response.status(Response.Status.CREATED).entity(novaMicro_Regiao).build();
+    }
 
 
     @DELETE
     @Path("{id}")
-    public void deleteMicro_Regiao(@PathParam("id") int id){
-        micro_regioes.remove(micro_regiao -> micro_regiao.getId() == id);
+    public Response deleteMicro_Regiao(@PathParam("id") String id){
+        boolean removed = micro_regioes.removeIf(micro_regiao -> micro_regiao.getId().equals(id));
+        if (removed) {
+            return Response.noContent().build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).entity("Micro Região não encontrada").build();
+        }
     }
 
 

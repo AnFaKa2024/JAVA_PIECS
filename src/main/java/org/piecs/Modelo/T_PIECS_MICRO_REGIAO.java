@@ -10,12 +10,11 @@ public class T_PIECS_MICRO_REGIAO extends EntidadeBase{
     private transient T_PIECS_RESPONSAVEL responsavel;
     private transient T_PIECS_ENDERECO endereco;
 
-
     public T_PIECS_MICRO_REGIAO() {
     }
 
-    public T_PIECS_MICRO_REGIAO(int id, boolean deletado) {
-        super(id, deletado);
+    public T_PIECS_MICRO_REGIAO(String id) {
+        super(id);
     }
 
     public T_PIECS_MICRO_REGIAO(int qt_placa, int capacidade_placa, int qt_bateria, int capacidade_bateria, int qt_armazenada_energia, T_PIECS_RESPONSAVEL responsavel, T_PIECS_ENDERECO endereco) {
@@ -28,8 +27,8 @@ public class T_PIECS_MICRO_REGIAO extends EntidadeBase{
         this.endereco = endereco;
     }
 
-    public T_PIECS_MICRO_REGIAO(int id, boolean deletado, int qt_placa, int capacidade_placa, int qt_bateria, int capacidade_bateria, int qt_armazenada_energia, T_PIECS_RESPONSAVEL responsavel, T_PIECS_ENDERECO endereco) {
-        super(id, deletado);
+    public T_PIECS_MICRO_REGIAO(String id, int qt_placa, int capacidade_placa, int qt_bateria, int capacidade_bateria, int qt_armazenada_energia, T_PIECS_RESPONSAVEL responsavel, T_PIECS_ENDERECO endereco) {
+        super(id);
         this.qt_placa = qt_placa;
         this.capacidade_placa = capacidade_placa;
         this.qt_bateria = qt_bateria;
@@ -95,6 +94,10 @@ public class T_PIECS_MICRO_REGIAO extends EntidadeBase{
         this.endereco = endereco;
     }
 
+    public String getId(){
+        return this.id;
+    }
+
     @Override
     public String toString() {
         return "T_PIECS_MICRO_REGIAO{" +
@@ -105,8 +108,7 @@ public class T_PIECS_MICRO_REGIAO extends EntidadeBase{
                 ", qt_armazenada_energia=" + qt_armazenada_energia +
                 ", responsavel=" + responsavel +
                 ", endereco=" + endereco +
-                ", id=" + id +
-                ", deletado=" + deletado +
+                ", id='" + id + '\'' +
                 '}';
     }
 }
