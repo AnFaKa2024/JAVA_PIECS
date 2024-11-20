@@ -103,7 +103,7 @@ public class RepositorioBeneficiario implements RepositorioBase<T_PIECS_BENEFICI
                     var rsBeneficiario = rs.getString("nm_beneficiario");
                     var rsEmail = rs.getString("email");
                     var rsSenha = rs.getString("senha");
-                    // Supondo que você tenha um método para obter o responsável
+
                     T_PIECS_RESPONSAVEL responsavel = obterResponsavelPorId(rs.getString("responsavel_id"));
                     beneficiarios.add(new T_PIECS_BENEFICIARIOS(rsId, rsBeneficiario, rsEmail, rsSenha, responsavel));
                 }
@@ -122,9 +122,9 @@ public class RepositorioBeneficiario implements RepositorioBase<T_PIECS_BENEFICI
             stmt.setString(1, responsavelId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    // Supondo que a tabela T_PIECS_RESPONSAVEL tenha os campos id e nome
-                    var rsNome = rs.getString("nome"); // Altere conforme os campos reais da tabela
-                    responsavel = new T_PIECS_RESPONSAVEL(responsavelId, rsNome); // Supondo que você tenha um construtor que aceita ID e nome
+
+                    var rsNome = rs.getString("nm_cliente");
+                    responsavel = new T_PIECS_RESPONSAVEL(responsavelId, rsNome);
                 }
             }
         } catch (Exception e) {

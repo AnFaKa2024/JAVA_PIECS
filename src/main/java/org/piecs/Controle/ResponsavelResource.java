@@ -13,8 +13,7 @@ import java.util.stream.Collectors;
 @Path("T_PIECS_RESPONSAVEL")
 public class ResponsavelResource {
 
-    private List<T_PIECS_RESPONSAVEL> responsaveis = new ArrayList<>(); // Simulação de um repositório
-
+    private List<T_PIECS_RESPONSAVEL> responsaveis = new ArrayList<>();
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("page/{id}")
@@ -48,12 +47,12 @@ public class ResponsavelResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addResponsavel(T_PIECS_RESPONSAVEL novoResponsavel) {
-        // Validação simples
+
         if (novoResponsavel.getNm_cliente() == null || novoResponsavel.getCpf_cnpj() == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-        responsaveis.add(novoResponsavel); // Adiciona o novo responsável
+        responsaveis.add(novoResponsavel);
         return Response.status(Response.Status.CREATED).entity(novoResponsavel).build();
     }
 
@@ -66,11 +65,11 @@ public class ResponsavelResource {
             .findFirst();
 
         if (responsavelExistente.isPresent()) {
-            // Atualiza os dados do responsável
+
             T_PIECS_RESPONSAVEL responsavel = responsavelExistente.get();
             responsavel.setNm_cliente(novoResponsavel.getNm_cliente());
             responsavel.setCpf_cnpj(novoResponsavel.getCpf_cnpj());
-            // Atualize outros campos conforme necessário
+
             return Response.ok(responsavel).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
