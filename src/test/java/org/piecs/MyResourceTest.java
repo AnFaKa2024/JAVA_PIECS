@@ -34,7 +34,8 @@ public class MyResourceTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        server.stop();
+        // server.stop(); // Método obsoleto
+        server.shutdownNow(); // Usar shutdownNow() em vez de stop()
     }
 
     /**

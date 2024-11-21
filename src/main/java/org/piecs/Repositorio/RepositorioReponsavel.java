@@ -48,6 +48,10 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
                 var senha = rs.getString("senha");
                 var qt_armazenada_total = rs.getInt("qt_armazenada_total");
                 System.out.println("id" + rsId + "| nm_cliente" + nm_cliente + "| cpf_cnpj" + cpf_cnpj);
+                System.out.println("Data de Nascimento: " + dt_nascimento);
+                System.out.println("Email: " + email);
+                System.out.println("Senha: " + senha);
+                System.out.println("Quantidade Armazenada Total: " + qt_armazenada_total);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,6 +96,9 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
                     var rsBeneficiarios = rs.getObject("id_beneficiario");
                     var rsEnderecos = rs.getObject("id_endereco");
                     responsavel = new T_PIECS_RESPONSAVEL(rsId, rsCliente);
+                    System.out.println("Data de Nascimento: " + rsDtNascimento);
+                    System.out.println("Beneficiários: " + rsBeneficiarios);
+                    System.out.println("Endereços: " + rsEnderecos);
                 }
             }
         } catch (Exception e) {
