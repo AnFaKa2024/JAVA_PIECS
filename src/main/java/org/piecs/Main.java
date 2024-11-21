@@ -43,7 +43,7 @@ public class Main {
         } catch (IOException e) {
             System.err.println("Error while starting the server: " + e.getMessage());
         } finally {
-            server.stop();
+            server.shutdownNow();
             System.out.println("Server stopped.");
         }
     }
