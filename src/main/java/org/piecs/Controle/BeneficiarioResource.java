@@ -17,16 +17,16 @@ public class BeneficiarioResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("page/{responsavel}")
     public List<T_PIECS_BENEFICIARIOS> getBeneficiarios(
-        @PathParam("responsavel") String responsavelId,
-        @QueryParam("pageSize") int pageSize) {
+            @PathParam("responsavel") String responsavelId,
+            @QueryParam("pageSize") int pageSize) {
 
         return repositorio.ListarPorResponsavel(responsavelId, pageSize);
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("search")
-    public T_PIECS_BENEFICIARIOS searchBeneficiarios(
-            @QueryParam("id") String id) {
+    public T_PIECS_BENEFICIARIOS searchBeneficiarios(@QueryParam("id") String id) {
 
         T_PIECS_BENEFICIARIOS beneficiario = repositorio.GetById(id);
         if (beneficiario == null) {
@@ -41,7 +41,8 @@ public class BeneficiarioResource {
     public Response addBeneficiarios(T_PIECS_BENEFICIARIOS novoBeneficiario) {
 
         if (novoBeneficiario.getNm_beneficiario() == null || novoBeneficiario.getEmail() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Nome e email são obrigatórios.").build();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Nome e email são obrigatórios.").build();
         }
         repositorio.Adicionar(novoBeneficiario);
         return Response.status(Response.Status.CREATED).entity(novoBeneficiario).build();
@@ -54,7 +55,8 @@ public class BeneficiarioResource {
 
         T_PIECS_BENEFICIARIOS beneficiarioExistente = repositorio.GetById(id);
         if (beneficiarioExistente == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Beneficiário não encontrado com ID: " + id).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Beneficiário não encontrado com ID: " + id).build();
         }
         beneficiariosAtualizados.setId(id);
         repositorio.UpDate(beneficiariosAtualizados);
@@ -67,7 +69,8 @@ public class BeneficiarioResource {
 
         T_PIECS_BENEFICIARIOS beneficiarioExistente = repositorio.GetById(id);
         if (beneficiarioExistente == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Beneficiário não encontrado com ID: " + id).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Beneficiário não encontrado com ID: " + id).build();
         }
         repositorio.Delete(id);
         return Response.status(Response.Status.NO_CONTENT).build();

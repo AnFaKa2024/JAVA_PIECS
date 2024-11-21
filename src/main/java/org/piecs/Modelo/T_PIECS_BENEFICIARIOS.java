@@ -1,19 +1,14 @@
 package org.piecs.Modelo;
 
 public class T_PIECS_BENEFICIARIOS extends EntidadeBase{
+    private String id;
     private String nm_beneficiario;
     private String email;
     private String senha;
     private transient T_PIECS_RESPONSAVEL responsavel;
 
-    public T_PIECS_BENEFICIARIOS() {
+    public T_PIECS_BENEFICIARIOS(String rsId, String rsBeneficiario) {
     }
-
-    public T_PIECS_BENEFICIARIOS(String id) {
-        super(id);
-
-    }
-
     public T_PIECS_BENEFICIARIOS(String nm_beneficiario, String email, String senha, T_PIECS_RESPONSAVEL responsavel) {
         this.nm_beneficiario = nm_beneficiario;
         this.email = email;
@@ -23,6 +18,7 @@ public class T_PIECS_BENEFICIARIOS extends EntidadeBase{
 
     public T_PIECS_BENEFICIARIOS(String id, String nm_beneficiario, String email, String senha, T_PIECS_RESPONSAVEL responsavel) {
         super(id);
+        this.id = id;
         this.nm_beneficiario = nm_beneficiario;
         this.email = email;
         this.senha = senha;

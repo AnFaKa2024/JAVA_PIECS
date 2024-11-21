@@ -1,6 +1,7 @@
 package org.piecs.Repositorio;
 
 import org.piecs.InfraEstrutura.ConexaoBancoDados;
+import org.piecs.Modelo.T_PIECS_BENEFICIARIOS;
 import org.piecs.Modelo.T_PIECS_ENDERECO;
 
 import java.sql.SQLException;
@@ -64,6 +65,16 @@ public class RepositorioEndereco implements RepositorioBase<T_PIECS_ENDERECO>{
         } catch (SQLException e) {
             System.err.println("Erro ao deletar endereço: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void UpDate() {
+
+    }
+
+    @Override
+    public void UpDate(T_PIECS_BENEFICIARIOS beneficiario) {
+
     }
 
 

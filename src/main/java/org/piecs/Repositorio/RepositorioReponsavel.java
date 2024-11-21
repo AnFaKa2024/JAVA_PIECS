@@ -1,7 +1,11 @@
 package org.piecs.Repositorio;
 
 import org.piecs.InfraEstrutura.ConexaoBancoDados;
+import org.piecs.Modelo.T_PIECS_BENEFICIARIOS;
+import org.piecs.Modelo.T_PIECS_ENDERECO;
 import org.piecs.Modelo.T_PIECS_RESPONSAVEL;
+
+import java.util.List;
 
 
 public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVEL>{
@@ -9,7 +13,7 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
 
     @Override
     public void Adicionar(T_PIECS_RESPONSAVEL responsavel) {
-        String query = "INSERT INTO T_PIECS_RESPONSAVEL (nm_cliente, dt_nascimento, cpf_cnpj, email, senha, qt_armazenada_total, beneficiarios, enderecos) VALUES (?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO T_PIECS_RESPONSAVEL (nm_cliente, dt_nascimento, cpf_cnpj, email, senha, qt_armazenada_total) VALUES (?,?,?,?,?,?)";
         try (var conn = ConexaoBancoDados.getConnection();
              var stmt = conn.prepareStatement(query)) {
 
@@ -29,14 +33,14 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
     }
 
     @Override
-    public void Listar() {
+    public List<T_PIECS_ENDERECO> Listar() {
         String query = "SELECT * FROM T_PIECS_RESPONSAVEL";
         try (var conn = ConexaoBancoDados.getConnection();
              var stmt = conn.prepareStatement(query);
              var rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                var rsId = rs.getInt("id");
+                var rsId = rs.getInt("id_responsavel");
                 var nm_cliente = rs.getString("nm_cliente");
                 var dt_nascimento = rs.getDate("dt_nascimento");
                 var cpf_cnpj = rs.getString("cpf_cnpj");
@@ -48,6 +52,7 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override
@@ -64,21 +69,29 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
     }
 
     @Override
+    public void UpDate() {
+    }
+
+    @Override
+    public void UpDate(T_PIECS_BENEFICIARIOS beneficiario) {
+    }
+
+    @Override
     public T_PIECS_RESPONSAVEL GetById(String id) {
         T_PIECS_RESPONSAVEL responsavel = null;
-        String query = "SELECT * FROM T_PIECS_RESPONSAVEL WHERE id = ?";
+        String query = "INSERT INTO T_PIECS_RESPONSAVEL (nm_cliente, dt_nascimento, cpf_cnpj, email, senha, qt_armazenada_total) VALUES (?,?,?,?,?,?)";
         try (var conn = ConexaoBancoDados.getConnection();
              var stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, id);
             try (var rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    var rsId = rs.getString("id");
+                    var rsId = rs.getInt("id_responsavel");
                     var rsCliente = rs.getString("nm_cliente");
                     var rsDtNascimento = rs.getDate("dt_nascimento");
-                    var rsBeneficiarios = rs.getObject("beneficiarios");
-                    var rsEnderecos = rs.getObject("enderecos");
-                    responsavel = new T_PIECS_RESPONSAVEL(rsId, rsCliente, rsDtNascimento, rsBeneficiarios, rsEnderecos);
+                    var rsBeneficiarios = rs.getObject("id_beneficiario");
+                    var rsEnderecos = rs.getObject("id_endereco");
+                    responsavel = new T_PIECS_RESPONSAVEL(rsId, rsCliente);
                 }
             }
         } catch (Exception e) {

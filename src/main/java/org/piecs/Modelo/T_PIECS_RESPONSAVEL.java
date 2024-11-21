@@ -16,10 +16,10 @@ public class T_PIECS_RESPONSAVEL extends EntidadeBase {
     private List<T_PIECS_BENEFICIARIOS> beneficiarios;
     private List<T_PIECS_ENDERECO> enderecos;
 
-    public T_PIECS_RESPONSAVEL() {
+    public T_PIECS_RESPONSAVEL(String rsId, String rsNome) {
     }
 
-    public T_PIECS_RESPONSAVEL(String id) {
+    public T_PIECS_RESPONSAVEL(int rsId, String id) {
         super(id);
     }
 

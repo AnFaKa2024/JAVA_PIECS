@@ -9,10 +9,10 @@ public class T_PIECS_ENDERECO extends EntidadeBase{
     private String estado;
     private int numero;
 
-    public T_PIECS_ENDERECO() {
+    public T_PIECS_ENDERECO(String rsId, String rsCep) {
     }
 
-    public T_PIECS_ENDERECO(String id) {
+    public T_PIECS_ENDERECO(int rsId, String id) {
         super(id);
     }
 

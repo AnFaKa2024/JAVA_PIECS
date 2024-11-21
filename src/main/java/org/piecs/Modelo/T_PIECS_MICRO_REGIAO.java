@@ -10,7 +10,7 @@ public class T_PIECS_MICRO_REGIAO extends EntidadeBase{
     private transient T_PIECS_RESPONSAVEL responsavel;
     private transient T_PIECS_ENDERECO endereco;
 
-    public T_PIECS_MICRO_REGIAO() {
+    public T_PIECS_MICRO_REGIAO(int rsId, String rsNome) {
     }
 
     public T_PIECS_MICRO_REGIAO(String id) {

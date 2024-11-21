@@ -1,4 +1,4 @@
-package org.piecs;
+package org.piecs.Controle;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
