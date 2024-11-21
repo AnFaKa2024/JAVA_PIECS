@@ -14,9 +14,9 @@ public class RepositorioEndereco implements RepositorioBase<T_PIECS_ENDERECO>{
     @Override
     public void Adicionar(T_PIECS_ENDERECO endereco) {
 
-        var query = "INSERT INTO T_PIECS_ENDERECO (id, cep, rua, bairro, cidade, estado, numero) VALUES (?,?,?,?,?,?,?)";
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query)) {
+        String query = "INSERT INTO T_PIECS_ENDERECO (id, cep, rua, bairro, cidade, estado, numero) VALUES (?,?,?,?,?,?,?)";
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, endereco.getId());
             stmt.setString(2, endereco.getCep());
             stmt.setString(3, endereco.getRua());
@@ -34,18 +34,18 @@ public class RepositorioEndereco implements RepositorioBase<T_PIECS_ENDERECO>{
     @Override
     public List<T_PIECS_ENDERECO> Listar() {
         List<T_PIECS_ENDERECO> enderecos = new ArrayList<>();
-        var query = "SELECT * FROM T_PIECS_ENDERECO";
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query);
-             var rs = stmt.executeQuery()) {
+        String query = "SELECT * FROM T_PIECS_ENDERECO";
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query);
+             java.sql.ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                var rsId = rs.getString("id");
-                var rsCep = rs.getString("cep");
-                var rsRua = rs.getString("rua");
-                var rsBairro = rs.getString("bairro");
-                var rsCidade = rs.getString("cidade");
-                var rsEstado = rs.getString("estado");
-                var rsNumero = rs.getInt("numero");
+                String rsId = rs.getString("id");
+                String rsCep = rs.getString("cep");
+                String rsRua = rs.getString("rua");
+                String rsBairro = rs.getString("bairro");
+                String rsCidade = rs.getString("cidade");
+                String rsEstado = rs.getString("estado");
+                int rsNumero = rs.getInt("numero");
                 T_PIECS_ENDERECO endereco = new T_PIECS_ENDERECO(rsId, rsCep, rsRua, rsBairro, rsCidade, rsEstado, rsNumero);
                 enderecos.add(endereco);
             }
@@ -57,9 +57,9 @@ public class RepositorioEndereco implements RepositorioBase<T_PIECS_ENDERECO>{
 
     @Override
     public void Delete(String id) {
-        var query = "DELETE FROM T_PIECS_ENDERECO WHERE id = ?";
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query)) {
+        String query = "DELETE FROM T_PIECS_ENDERECO WHERE id = ?";
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -81,14 +81,14 @@ public class RepositorioEndereco implements RepositorioBase<T_PIECS_ENDERECO>{
     @Override
     public T_PIECS_ENDERECO GetById(String id) {
         T_PIECS_ENDERECO endereco = null;
-        var query = "SELECT * FROM T_PIECS_ENDERECO WHERE id = ?";
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query)) {
+        String query = "SELECT * FROM T_PIECS_ENDERECO WHERE id = ?";
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, id);
-            try (var rs = stmt.executeQuery()) {
+            try (java.sql.ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    var rsId = rs.getString("id");
-                    var rsCep = rs.getString("cep");
+                    String rsId = rs.getString("id");
+                    String rsCep = rs.getString("cep");
                     endereco = new T_PIECS_ENDERECO(rsId, rsCep);
                 }
             }
@@ -100,23 +100,23 @@ public class RepositorioEndereco implements RepositorioBase<T_PIECS_ENDERECO>{
 
     public List<T_PIECS_ENDERECO> SearchByDescription(String descricao) {
         List<T_PIECS_ENDERECO> enderecos = new ArrayList<>();
-        var query = "SELECT * FROM T_PIECS_ENDERECO WHERE rua LIKE ? OR bairro LIKE ? OR cidade LIKE ?";
+        String query = "SELECT * FROM T_PIECS_ENDERECO WHERE rua LIKE ? OR bairro LIKE ? OR cidade LIKE ?";
 
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query)) {
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query)) {
             String searchPattern = "%" + descricao + "%"; // Adiciona os caracteres de wildcard para busca
             stmt.setString(1, searchPattern);
             stmt.setString(2, searchPattern);
             stmt.setString(3, searchPattern);
-            try (var rs = stmt.executeQuery()) {
+            try (java.sql.ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    var rsId = rs.getString("id");
-                    var rsCep = rs.getString("cep");
-                    var rsRua = rs.getString("rua");
-                    var rsBairro = rs.getString("bairro");
-                    var rsCidade = rs.getString("cidade");
-                    var rsEstado = rs.getString("estado");
-                    var rsNumero = rs.getInt("numero");
+                    String rsId = rs.getString("id");
+                    String rsCep = rs.getString("cep");
+                    String rsRua = rs.getString("rua");
+                    String rsBairro = rs.getString("bairro");
+                    String rsCidade = rs.getString("cidade");
+                    String rsEstado = rs.getString("estado");
+                    int rsNumero = rs.getInt("numero");
                     T_PIECS_ENDERECO endereco = new T_PIECS_ENDERECO(rsId, rsCep, rsRua, rsBairro, rsCidade, rsEstado, rsNumero);
                     enderecos.add(endereco);
                 }

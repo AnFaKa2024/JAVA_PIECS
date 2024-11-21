@@ -34,10 +34,10 @@ public class RepositorioBeneficiario implements RepositorioBase<T_PIECS_BENEFICI
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                var rsId = rs.getString("id_responsavel");
-                var rsBeneficiario = rs.getString("nm_beneficiario");
-                var rsEmail = rs.getString("email");
-                var rsSenha = rs.getString("senha");
+                String rsId = rs.getString("id_responsavel");
+                String rsBeneficiario = rs.getString("nm_beneficiario");
+                String rsEmail = rs.getString("email");
+                String rsSenha = rs.getString("senha");
                 System.out.println("id: " + rsId + ", nm_beneficiario: " + rsBeneficiario + ", email: " + rsEmail + ", senha: " + rsSenha);
             }
         } catch (Exception e) {
@@ -86,8 +86,8 @@ public class RepositorioBeneficiario implements RepositorioBase<T_PIECS_BENEFICI
             stmt.setString(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    var rsId = rs.getString("id");
-                    var rsBeneficiario = rs.getString("nm_beneficiario");
+                    String rsId = rs.getString("id");
+                    String rsBeneficiario = rs.getString("nm_beneficiario");
                     beneficiario = new T_PIECS_BENEFICIARIOS(rsId, rsBeneficiario);
                 }
             }
@@ -106,10 +106,10 @@ public class RepositorioBeneficiario implements RepositorioBase<T_PIECS_BENEFICI
             stmt.setInt(2, pageSize);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    var rsId = rs.getString("id_responsavel");
-                    var rsBeneficiario = rs.getString("nm_beneficiario");
-                    var rsEmail = rs.getString("email");
-                    var rsSenha = rs.getString("senha");
+                    String rsId = rs.getString("id_responsavel");
+                    String rsBeneficiario = rs.getString("nm_beneficiario");
+                    String rsEmail = rs.getString("email");
+                    String rsSenha = rs.getString("senha");
 
                     T_PIECS_RESPONSAVEL responsavel = obterResponsavelPorId(rs.getString("responsavel_id"));
                     beneficiarios.add(new T_PIECS_BENEFICIARIOS(rsId, rsBeneficiario, rsEmail, rsSenha, responsavel));
@@ -129,8 +129,8 @@ public class RepositorioBeneficiario implements RepositorioBase<T_PIECS_BENEFICI
             stmt.setString(1, rsIdBeneficiario);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    var rsId = rs.getString("id_responsavel");
-                    var rsNome = rs.getString("nm_cliente");
+                    String rsId = rs.getString("id_responsavel");
+                    String rsNome = rs.getString("nm_cliente");
                     responsavel = new T_PIECS_RESPONSAVEL(rsId, rsNome);
                 }
             }

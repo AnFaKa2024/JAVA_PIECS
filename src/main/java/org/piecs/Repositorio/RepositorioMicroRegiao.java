@@ -15,8 +15,8 @@ public class RepositorioMicroRegiao implements RepositorioBase<T_PIECS_MICRO_REG
         String query = "INSERT INTO T_PIECS_MICRO_REGIAO(qt_placa, capacidade_placa, qt_bateria," +
                 " capacidade_bateria, qt_armazenada_energia, responsavel_id, endereco_id) VALUES (?,?,?,?,?,?,?)";
 
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query)) {
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, microRegiao.getQt_placa());
             stmt.setInt(2, microRegiao.getCapacidade_placa());
@@ -36,9 +36,9 @@ public class RepositorioMicroRegiao implements RepositorioBase<T_PIECS_MICRO_REG
     public List<T_PIECS_ENDERECO> Listar() {
         String query = "SELECT * FROM T_PIECS_MICRO_REGIAO";
 
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query);
-             var rs = stmt.executeQuery()) {
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query);
+             java.sql.ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 String cep = rs.getString("cep");
@@ -57,8 +57,8 @@ public class RepositorioMicroRegiao implements RepositorioBase<T_PIECS_MICRO_REG
     public void Delete(String id) {
         String query = "DELETE FROM T_PIECS_MICRO_REGIAO WHERE id = ?";
 
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query)) {
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, id);
             stmt.executeUpdate();
@@ -84,14 +84,14 @@ public class RepositorioMicroRegiao implements RepositorioBase<T_PIECS_MICRO_REG
 
         String query = "SELECT * FROM T_PIECS_MICRO_REGIAO WHERE id = ?";
 
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query)) {
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, id);
-            try (var rs = stmt.executeQuery()) {
+            try (java.sql.ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    var rsNome = "";
-                    var rsIdMicroRegiao = 0;
+                    String rsNome = "";
+                    int rsIdMicroRegiao = 0;
                     microRegiao = new T_PIECS_MICRO_REGIAO(rsIdMicroRegiao, rsNome);
                     microRegiao.setQt_placa(rs.getInt("qt_placa"));
                     microRegiao.setCapacidade_placa(rs.getInt("capacidade_placa"));
@@ -105,7 +105,7 @@ public class RepositorioMicroRegiao implements RepositorioBase<T_PIECS_MICRO_REG
                     if (rs.next()) {
                         rsIdMicroRegiao = rs.getInt("id_micro_regiao");
                         rsNome = rs.getString("nm_cliente");
-                        var rsCep = rs.getString("cep");
+                        String rsCep = rs.getString("cep");
                         microRegiao = new T_PIECS_MICRO_REGIAO(rsIdMicroRegiao, rsNome);
 
                         T_PIECS_RESPONSAVEL responsavel = new T_PIECS_RESPONSAVEL(rsIdMicroRegiao, rsNome);

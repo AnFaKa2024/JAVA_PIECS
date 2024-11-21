@@ -14,8 +14,8 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
     @Override
     public void Adicionar(T_PIECS_RESPONSAVEL responsavel) {
         String query = "INSERT INTO T_PIECS_RESPONSAVEL (nm_cliente, dt_nascimento, cpf_cnpj, email, senha, qt_armazenada_total) VALUES (?,?,?,?,?,?)";
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query)) {
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, responsavel.getNm_cliente());
             stmt.setDate(2, java.sql.Date.valueOf(responsavel.getDt_nascimento()));
@@ -35,18 +35,18 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
     @Override
     public List<T_PIECS_ENDERECO> Listar() {
         String query = "SELECT * FROM T_PIECS_RESPONSAVEL";
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query);
-             var rs = stmt.executeQuery()) {
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query);
+             java.sql.ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                var rsId = rs.getInt("id_responsavel");
-                var nm_cliente = rs.getString("nm_cliente");
-                var dt_nascimento = rs.getDate("dt_nascimento");
-                var cpf_cnpj = rs.getString("cpf_cnpj");
-                var email = rs.getString("email");
-                var senha = rs.getString("senha");
-                var qt_armazenada_total = rs.getInt("qt_armazenada_total");
+                int rsId = rs.getInt("id_responsavel");
+                String nm_cliente = rs.getString("nm_cliente");
+                java.sql.Date dt_nascimento = rs.getDate("dt_nascimento");
+                String cpf_cnpj = rs.getString("cpf_cnpj");
+                String email = rs.getString("email");
+                String senha = rs.getString("senha");
+                int qt_armazenada_total = rs.getInt("qt_armazenada_total");
                 System.out.println("id" + rsId + "| nm_cliente" + nm_cliente + "| cpf_cnpj" + cpf_cnpj);
                 System.out.println("Data de Nascimento: " + dt_nascimento);
                 System.out.println("Email: " + email);
@@ -62,8 +62,8 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
     @Override
     public void Delete(String id) {
         String query = "DELETE FROM T_PIECS_RESPONSAVEL WHERE id = ?";
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query)) {
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, id);
             stmt.executeUpdate();
@@ -84,17 +84,17 @@ public class RepositorioReponsavel implements RepositorioBase<T_PIECS_RESPONSAVE
     public T_PIECS_RESPONSAVEL GetById(String id) {
         T_PIECS_RESPONSAVEL responsavel = null;
         String query = "INSERT INTO T_PIECS_RESPONSAVEL (nm_cliente, dt_nascimento, cpf_cnpj, email, senha, qt_armazenada_total) VALUES (?,?,?,?,?,?)";
-        try (var conn = ConexaoBancoDados.getConnection();
-             var stmt = conn.prepareStatement(query)) {
+        try (java.sql.Connection conn = ConexaoBancoDados.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, id);
-            try (var rs = stmt.executeQuery()) {
+            try (java.sql.ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    var rsId = rs.getInt("id_responsavel");
-                    var rsCliente = rs.getString("nm_cliente");
-                    var rsDtNascimento = rs.getDate("dt_nascimento");
-                    var rsBeneficiarios = rs.getObject("id_beneficiario");
-                    var rsEnderecos = rs.getObject("id_endereco");
+                    int rsId = rs.getInt("id_responsavel");
+                    String rsCliente = rs.getString("nm_cliente");
+                    java.sql.Date rsDtNascimento = rs.getDate("dt_nascimento");
+                    Object rsBeneficiarios = rs.getObject("id_beneficiario");
+                    Object rsEnderecos = rs.getObject("id_endereco");
                     responsavel = new T_PIECS_RESPONSAVEL(rsId, rsCliente);
                     System.out.println("Data de Nascimento: " + rsDtNascimento);
                     System.out.println("Beneficiários: " + rsBeneficiarios);
